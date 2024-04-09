@@ -31,7 +31,7 @@ class Calculator {
     }
 
     this.calculate = function() {
-      this.b = this.operand.slice(1);
+      this.b = this.operand;
       let result = 0;
       switch (this.operation) {
         case 'x':
