@@ -26,6 +26,7 @@ class Calculator {
             this.operation = value;
             this.a = Number(this.operand);
             this.operand = '';
+            this.b = 0;
         }
 
         this.calculate = function() {
@@ -47,12 +48,16 @@ class Calculator {
             }
             this.operand = result;
             this.screen = result;
-            this.b = 0;
             this.operation = null;
           }
 
         this.updateScreen = function(value) {
-            this.screen += value;
+            if (this.b !== 0) {
+                this.screen = value;
+                this.operand = '';
+            } 
+            else if (this.operand[0] === '0') this.screen = value;
+            else this.screen += value;
         }
 
         this.clear = function() {
@@ -63,12 +68,8 @@ class Calculator {
         }
 
         this.addOperandNumber = function(value) {
-            this.operand += value;
-        }
-
-        this.clear = function() {
-            this.screen = '';
-            this.operand = '';
+            if (this.operand[0] === '0') this.operand = value;
+            else this.operand += value;
         }
     }
 }
@@ -84,14 +85,20 @@ const deleteBtn = document.querySelector('.data-delete');
 
 numberButtons.forEach(x => {
     x.addEventListener('click', () => {
-      calculator.updateScreen(x.innerText);
-      calculator.addOperandNumber(x.innerText);
-      screen.innerText = calculator.screen;
+        if (calculator.operand[0] === '0' && x.innerText === '0') {
+            return;
+        }
+        else {
+            calculator.updateScreen(x.innerText);
+            calculator.addOperandNumber(x.innerText);
+            screen.innerText = calculator.screen;
+        }
+      
     })
 })
 
 operations.forEach(x => {
-  x.addEventListener('click', () => {
+    x.addEventListener('click', () => {
     if (calculator.operation) {
         calculator.calculate();
     } else {
@@ -104,7 +111,7 @@ operations.forEach(x => {
 
 equalBtn.addEventListener('click', () => {
     if (!calculator.operation) {
-        null;
+        return;
     } else {
         calculator.calculate();
         screen.innerText = calculator.screen;
