@@ -54,6 +54,12 @@ class Calculator {
             this.screen += value;
         }
 
+        this.clear = function() {
+            this.screen = '';
+            this.a = 0;
+            this.operand = '';
+        }
+
         this.addOperandNumber = function(value) {
             this.operand += value;
         }
@@ -66,6 +72,8 @@ const screen = document.querySelector('.placeholder');
 const numberButtons = document.querySelectorAll('[data-number]');
 const operations = document.querySelectorAll('[data-operation');
 const equalBtn = document.querySelector('.data-equal');
+const deleteBtn = document.querySelector('.data-delete');
+
 
 numberButtons.forEach(x => {
     x.addEventListener('click', () => {
@@ -85,5 +93,10 @@ operations.forEach(x => {
 
 equalBtn.addEventListener('click', () => {
     calculator.calculate();
+    screen.innerText = calculator.screen;
+})
+
+deleteBtn.addEventListener('click', () => {
+    calculator.clear();
     screen.innerText = calculator.screen;
 })
