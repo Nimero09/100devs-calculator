@@ -48,6 +48,7 @@ class Calculator {
             this.operand = result;
             this.screen = result;
             this.b = 0;
+            this.operation = null;
           }
 
         this.updateScreen = function(value) {
