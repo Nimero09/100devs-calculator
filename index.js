@@ -103,8 +103,12 @@ operations.forEach(x => {
 })
 
 equalBtn.addEventListener('click', () => {
-    calculator.calculate();
-    screen.innerText = calculator.screen;
+    if (!calculator.operation) {
+        null;
+    } else {
+        calculator.calculate();
+        screen.innerText = calculator.screen;
+    }
 })
 
 deleteBtn.addEventListener('click', () => {
